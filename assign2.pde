@@ -27,7 +27,7 @@ void setup() {
   tsx   = floor(random(15, 340));
   tsy   = floor(random(30, 440));
   HP    = loadImage("img/hp.png");            // HP
-  HPx   = 20;
+  HPx   = 40;
   enemy = loadImage("img/enemy.png");         // em 
   enx   = 0;
   eny   = (int)random(30, 410);
@@ -40,12 +40,13 @@ void draw() {
 switch (state){                               // game state
   case GAME_START:                            // First page
      image(start2,start,0);
-       if(mouseX>startGamex && mouseX<startGamex +230 && mouseY>startGamey && mouseY<startGamey +30 ){
-     image(start1,start,0);
-     }
-       if(mouseX>startGamex && mouseX<startGamex +230 && mouseY>startGamey && mouseY<startGamey +30 && mouseButton == LEFT ){
+  if(mouseX>startGamex && mouseX<startGamex +230 && mouseY>startGamey && mouseY<startGamey +30 ){
+       if(mousePressed){
        state = GAME_RUN;
+     }else{
+       image(start1,start,0);
      }
+  }
   break;
   case  GAME_RUN:                             // SEC page
     T    = (y - eny)/48;
@@ -93,9 +94,9 @@ switch (state){                               // game state
 if(enx > x-60 && enx < x+60 && eny > y-60 && eny < y+60){ // en & HP
    enx = 0;
    eny = (int)random(30, 410);
-  HPx -=20;    
+  HPx -=40;    
        }
-if(HPx<=4){
+if(HPx<=10){
    HPx = 20;  
      x = width-30;
      y = height/2;
@@ -105,7 +106,7 @@ if(HPx<=4){
 if(tsx >= x-60 && tsx < x+60 && tsy > y-60 && tsy < y+60){//ts and hp
   tsx = (int)random(15, 340);
   tsy = (int)random(30, 440);
-   HPx +=10;    
+   HPx +=20;    
        }
      if(HPx >= 200){
      HPx = 200;    
@@ -114,12 +115,11 @@ if(tsx >= x-60 && tsx < x+60 && tsy > y-60 && tsy < y+60){//ts and hp
   case  GAME_LOSE:                                        // TH page
     image(end2,end,0);
        if(mouseX>startGamex && mouseX<startGamex +230 && mouseY>startGamey-80 && mouseY<startGamey -50 ){
-    image(end1,end,0);
+        if(mousePressed){
+           state = GAME_RUN;
+         }else{image(end1,end,0);
+         }
        }
-       if(mouseX>startGamex && mouseX<startGamex +230 && mouseY>startGamey-80 && mouseY<startGamey -50 && mouseButton == LEFT ){
-         state = GAME_RUN;
-       }
-  
    break;   
   }
 }
